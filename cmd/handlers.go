@@ -18,8 +18,8 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	if pullERR != nil {
 		// if there was any error, print it here
 		err := writeJSON(w, 500, envelope{
-			"git_pull_err":    pullERR,
-			"git_pull_output": pullOutput,
+			"git_pull_err":    pullERR.Error(),
+			"git_pull_output": string(pullOutput),
 		}, nil)
 		if err != nil {
 			w.WriteHeader(500)
@@ -31,9 +31,9 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	if supervisorERR != nil {
 		// if there was any error, print it here
 		err := writeJSON(w, 500, envelope{
-			"git_pull_output":   pullOutput,
-			"supervisor_error":  supervisorERR,
-			"supervisor_output": supervisorOutput,
+			"git_pull_output":   string(pullOutput),
+			"supervisor_error":  supervisorERR.Error(),
+			"supervisor_output": string(supervisorOutput),
 		}, nil)
 
 		if err != nil {
@@ -43,8 +43,8 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeJSON(w, 200, envelope{
-		"git_pull_output":   pullOutput,
-		"supervisor_output": supervisorOutput,
+		"git_pull_output":   string(pullOutput),
+		"supervisor_output": string(supervisorOutput),
 	}, nil)
 	return
 }
