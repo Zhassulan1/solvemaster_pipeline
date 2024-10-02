@@ -11,7 +11,7 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
-	pullCMD := exec.Command("git", "-C", "/home/ubuntu/solvemaster_pipeline/", "pull")
+	pullCMD := exec.Command("git", "-C", "/home/ubuntu/solvmaster_backend/", "pull")
 	supervisorCMD := exec.Command("supervisorctl", "restart", "uvi:uvicorn")
 
 	pullOutput, pullERR := pullCMD.CombinedOutput()
